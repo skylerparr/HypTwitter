@@ -132,9 +132,8 @@ class TwitterConnectProtocol{
 			trace("_phase2 ::: "+sAuth_token);
 
 			#if android
-
+				HypTwitter_set_on_intent_callback( this, "_onIntent" );
 				flash.Lib.getURL( new flash.net.URLRequest( AUTHENTIFICATE+sAuth_token ) );
-				HypTwitter_set_callback( _onIntent );
 
 			#else
 
@@ -301,14 +300,20 @@ class TwitterConnectProtocol{
 
 		}
 
+		@JNI("fr.hyperfiction.HypTwitter", "setOnIntentCallback")
+		public static function HypTwitter_set_on_intent_callback(callbackObject:Dynamic, callbackFunc:String) : Void {
+
+		}
+
 		/**
 		*
 		*
 		* @private
 		* @return	void
 		*/
-		private function _onIntent( sIntent : String ) : Void{
+		public function _onIntent( sIntent : String ) : Void{
 			trace("_onIntent ::: "+sIntent);
+			sIntent = sIntent.split("?")[1];
 			_phaseResponse2( sIntent );
 		}
 

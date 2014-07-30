@@ -48,8 +48,16 @@ namespace hyptwitter{
 
 		    	} else {
 
+                    NSLog(@"request access granted");
+                    
 		    		// obtain all the local account instances
 		    		NSArray *accounts = [accountStore accountsWithAccountType:twitterType];
+
+                    int numberOfAccounts = [accounts count];
+		    		if(numberOfAccounts == 0) {
+                        hyptwitter_dispatch_event( "ERROR" , "no accounts");
+                        return;
+		    		}
 
 		    		// for simplicity, we will choose the first account returned - in your app,
 		    		// you should ensure that the user chooses the correct Twitter account
@@ -68,8 +76,13 @@ namespace hyptwitter{
 						hyptwitter_dispatch_event( "OK" ,[ responseStr UTF8String ]);
 
 					}else{
-						NSLog(@"Call failed");
-						hyptwitter_dispatch_event( "ERROR" , [[error localizedDescription] UTF8String]);
+						NSLog(@"Call failed %i", [urlResponse statusCode]);
+                        if(error != NULL) {
+                            hyptwitter_dispatch_event( "ERROR" , [[error localizedDescription] UTF8String]);
+                        } else {
+                            hyptwitter_dispatch_event( "ERROR", "unkown error");
+                        }
+
 					}
 				}];
 

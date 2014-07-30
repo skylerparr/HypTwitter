@@ -55,6 +55,7 @@ using namespace hyptwitter;
 
 				const char *sIntent_url	= env->GetStringUTFChars( jsIntent_url , false );
 
+                ALOG("invoking intent callback");
 				val_call1(
 					eval_callback_intent->get( ),
 					alloc_string( sIntent_url )

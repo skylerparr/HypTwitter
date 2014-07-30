@@ -216,8 +216,8 @@ class OAuth{
 		static public function uriEncode( s : String , ?b : Bool ) : String{
 
 			var regex : EReg = ~/[a-zA-Z0-9_~\.\-]/;
-			var c;
-			var res = "";
+			var c: String;
+			var res:String = "";
 			for( i in 0...s.length ){
 				c = s.charAt( i );
 				if( regex.match( c )){
